@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .form-section {
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nutrients-section {
+            background-color: #e8f5e9;
+        }
+        .environmental-section {
+            background-color: #e3f2fd;
+        }
+        .properties-section {
+            background-color: #f3e5f5;
+        }
+        .section-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        .main-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+        .info-icon {
+            margin-left: 5px;
+            color: #6c757d;
+            cursor: help;
+        }
+        .result-section {
+            background-color: #e8f5e9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .page-title {
+            color: #2e7d32;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        .submit-btn {
+            padding: 10px 30px;
+            font-size: 1.1rem;
+        }
+        .input-group-text {
+            background-color: #f8f9fa;
+            border-right: none;
+        }
+        .form-control {
+            border-left: none;
+        }
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #ced4da;
+        }
+        .result-card {
+            background: #2c3e50;
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 400px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .result-card img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        #contact {
+            scroll-margin-top: 70px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-flower1"></i>
+                Crop Recommendation System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>  <!-- Modified to use anchor link -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-card">
+            <h1 class="text-center page-title">
+                <i class="bi bi-flower1"></i>
+                Crop Recommendation System
+            </h1>
+
+            <form action="/predict" method="POST">
+                <!-- Nutrients Section -->
+                <div class="form-section nutrients-section">
+                    <h3 class="mb-4">
+                        <i class="bi bi-moisture section-icon"></i>
+                        Soil Nutrients
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label" for="Nitrogen">
+                                Nitrogen (N)
+                                <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Values should be between 0 to 140"></i>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-calculator"></i></span>
+                                <input type="number" class="form-control" id="Nitrogen" name="Nitrogen" placeholder="Enter value" required min="0" max="140" value="{{ Nitrogen }}">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label" for="Phosphorus">
+                                Phosphorus (P)
+                                <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Values should be between 5 to 145"></i>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-calculator"></i></span>
+                                <input type="number" class="form-control" id="Phosphorus" name="Phosphorus" placeholder="Enter value" required min="5" max="145" value="{{ Phosphorus }}">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label" for="Potassium">
+                                Potassium (K)
+                                <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Values should be between 5 to 205"></i>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-calculator"></i></span>
+                                <input type="number" class="form-control" id="Potassium" name="Potassium" placeholder="Enter value" required min="5" max="205" value="{{ Potassium }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Environmental Section -->
+                <div class="form-section environmental-section">
+                    <h3 class="mb-4">
+                        <i class="bi bi-thermometer-half section-icon"></i>
+                        Environmental Factors
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label" for="Temperature">
+                                Temperature (°C)
+                                <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Values should be between 7 to 45"></i>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-thermometer"></i></span>
+                                <input type="number" step="0.01" class="form-control" id="Temperature" name="Temperature" placeholder="Enter temperature" required min="7" max="45" value="{{ Temperature }}">
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label" for="Humidity">
+                                Humidity (%)
+                                <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Values should be between 10 to 100"></i>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-moisture"></i></span>
+                                <input type="number" step="0.01" class="form-control" id="Humidity" name="Humidity" placeholder="Enter humidity" required min="10" max="100" value="{{ Humidity }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Properties Section -->
+                <div class="form-section properties-section">
+                    <h3 class="mb-4">
+                        <i class="bi bi-water section-icon"></i>
+                        Soil Properties
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label" for="Ph">
+                                pH Level
+                                <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Values should be between 3 to 10"></i>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-droplet"></i></span>
+                                <input type="number" step="0.01" class="form-control" id="Ph" name="Ph" placeholder="Enter pH" required min="3" max="10" value="{{ Ph }}">
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label" for="Rainfall">
+                                Rainfall (mm)
+                                <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Values should be between 20 to 500"></i>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-cloud-rain"></i></span>
+                                <input type="number" step="0.01" class="form-control" id="Rainfall" name="Rainfall" placeholder="Enter rainfall" required min="20" max="500" value="{{ Rainfall }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success submit-btn">
+                        <i class="bi bi-search me-2"></i>
+                        Get Recommendation
+                    </button>
+                </div>
+            </form>
+
+            <!-- Result Section (shown conditionally) -->
+            {% if result %}
+            <div class="result-card">
+                <img src="{{ url_for('static', filename='image1.jpeg') }}" alt="Crop Image">
+                <h4 class="text-center mb-3">Recommended Crop for cultivation is:</h4>
+                <div class="h3 text-center">{{ result }}</div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Profile Section -->
+        <div class="profile-section mb-4" id="contact">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body bg-light rounded-3 p-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-4 text-center mb-3 mb-md-0">
+                            <div class="profile-image-container mb-2">
+                                <img src="{{ url_for('static', filename='profile.jpg') }}" alt="Advay Banugariya" 
+                                     class="rounded-circle border border-3 border-success"
+                                     style="width: 120px; height: 120px; object-fit: cover;">
+                            </div>
+                            <!-- Name under the image -->
+                            <h5 class="text-success mb-0">Advay Banugariya</h5>
+                        </div>
+                        <div class="col-md-8">
+                            <h3 class="card-title text-success mb-4">About Developer</h3>
+                            <div class="contact-info">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="bg-success bg-opacity-10 rounded-circle p-2 me-3">
+                                        <i class="bi bi-person text-success"></i>
+                                    </div>
+                                    <div>
+                                        <small class="text-muted d-block">Full Name</small>
+                                        <strong>Advay Banugariya</strong>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="bg-success bg-opacity-10 rounded-circle p-2 me-3">
+                                        <i class="bi bi-card-text text-success"></i>
+                                    </div>
+                                    <div>
+                                        <small class="text-muted d-block">Registration Number</small>
+                                        <strong>21BIT0086</strong>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-success bg-opacity-10 rounded-circle p-2 me-3">
+                                        <i class="bi bi-envelope text-success"></i>
+                                    </div>
+                                    <div>
+                                        <small class="text-muted d-block">Email Address</small>
+                                        <a href="mailto:advaybanugariya.s2021@vitstudent.ac.in" class="text-success text-decoration-none">
+                                            <strong>advaybanugariya.s2021@vitstudent.ac.in</strong>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <hr class="my-4">
+                        <p class="text-muted mb-0">
+                            <i class="bi bi-code-square me-2"></i>
+                            Developed with <i class="bi bi-heart-fill text-danger mx-1"></i> for Smart Agriculture
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Initialize tooltips -->
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+</body>
+</html>
